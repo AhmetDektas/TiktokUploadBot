@@ -1,4 +1,8 @@
 # TiktokUploadBot
+İndirmeniz gereken kütüphaneler:
+pip install yt-dlp google-api-python-client google-auth google-auth-oauthlib
+
+
 Tiktok Url'sini Youtube'a Video Olarak Yükleyen Bot
 
 YouTube API kullanarak videolar yüklemek için bir OAuth 2.0 kimlik bilgisi oluşturmalısınız. Aşağıdaki adımları uygulayın:
