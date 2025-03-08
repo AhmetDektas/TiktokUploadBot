@@ -1,6 +1,7 @@
 # TiktokUploadBot
 İndirmeniz gereken kütüphaneler:
-pip install yt-dlp google-api-python-client google-auth google-auth-oauthlib
+pip install requests google-api-python-client google-auth google-auth-oauthlib tkinter
+
 
 
 Tiktok Url'sini Youtube'a Video Olarak Yükleyen Bot
