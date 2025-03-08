@@ -2,35 +2,54 @@ import tkinter as tk
 from tkinter import scrolledtext, messagebox
 import os
 import pickle
-import yt_dlp
+import requests
+from bs4 import BeautifulSoup
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from google.auth.transport.requests import Request
+import requests
 
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 
-def download_video(url, output_dir):
-    ydl_opts = {'format': 'mp4', 'outtmpl': os.path.join(output_dir, '%(id)s.%(ext)s')}
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info_dict = ydl.extract_info(url, download=True)
-        video_filename = ydl.prepare_filename(info_dict)
+
+def download_video(url, output_folder):
+    api_url = 'https://tikwm.com/api/'
+    params = {'url': url}
+    response = requests.get(api_url, params=params).json()
+
+    if response.get('code') != 0:
+        raise Exception('Video indirilemedi. Lütfen URL\'yi kontrol edin.')
+
+    video_url = response['data']['play']
+    video_bytes = requests.get(video_url).content
+
+    video_filename = os.path.join(output_folder, url.split('/')[-1].split('?')[0] + '.mp4')
+
+    with open(video_filename, 'wb') as file:
+        file.write(video_bytes)
+
     return video_filename
+
 
 def authenticate_youtube():
     creds = None
-    if os.path.exists("token.pickle"):
-        with open("token.pickle", "rb") as token:
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    token_path = os.path.join(script_dir, "token.pickle")
+    secrets_path = os.path.join(script_dir, "client_secrets.json")
+
+    if os.path.exists(token_path):
+        with open(token_path, "rb") as token:
             creds = pickle.load(token)
 
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file("client_secrets.json", SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(secrets_path, SCOPES)
             creds = flow.run_local_server(port=0)
 
-        with open("token.pickle", "wb") as token:
+        with open(token_path, "wb") as token:
             pickle.dump(creds, token)
 
     return build("youtube", "v3", credentials=creds)
@@ -59,7 +78,8 @@ def start_upload():
         messagebox.showerror("Hata", "Linkler ve başlık alanları zorunludur!")
         return
 
-    output_dir = 'videos'
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    output_dir = os.path.join(script_dir, 'videos')
     os.makedirs(output_dir, exist_ok=True)
 
     youtube = authenticate_youtube()
