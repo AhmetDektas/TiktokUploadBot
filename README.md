@@ -1,6 +1,6 @@
 # TiktokUploadBot
 İndirmeniz gereken kütüphaneler:
-pip install requests google-api-python-client google-auth google-auth-oauthlib tkinter
+pip install requests google-api-python-client google-auth google-auth-oauthlib tkinter beautifulsoup4
 
 
 
