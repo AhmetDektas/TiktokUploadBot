@@ -1,5 +1,5 @@
 İndirmeniz gereken kütüphaneler:
-pip install requests google-api-python-client google-auth google-auth-oauthlib tkinter beautifulsoup4
+pip install requests google-api-python-client google-auth google-auth-oauthlib tkinter
 
 
 
