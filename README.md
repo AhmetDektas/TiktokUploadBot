@@ -1,4 +1,3 @@
-# TiktokUploadBot
 İndirmeniz gereken kütüphaneler:
 pip install requests google-api-python-client google-auth google-auth-oauthlib tkinter beautifulsoup4
 
@@ -34,10 +33,9 @@ Sonrasında tekrar "OAuth istemci kimliği oluştur" adımına dönün.
 Oluşturduktan sonra açılan pencerede "JSON'ı indir (Download JSON)" butonuna basın.
 İndirilen JSON dosyasını adını client_secrets.json olarak değiştirin.
 Bu dosyayı, Python scriptinizin (app.py) bulunduğu klasöre koyun.
-Dosya Yapınız Şöyle Olmalıdır:
-Uygulama Klasörünüz
-├──  app.py
-└──  client_secrets.json
+Dosyanızın içi:
+app.py
+client_secrets.json
 
 Google API'yi ilk defa kullanırken, uygulamanızı yalnızca Test Kullanıcıları çalıştırabilir. Google hesabınızı uygulamaya test kullanıcısı olarak eklemelisiniz:
 
